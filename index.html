@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EM Journal Club | Kaiser Downey Emergency Medicine</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy: #0B1D3A;
+  --navy-light: #132D54;
+  --navy-mid: #1A3A6B;
+  --teal: #00B4D8;
+  --teal-dark: #0096B7;
+  --gold: #F4A426;
+  --gold-light: #FFD07B;
+  --white: #FFFFFF;
+  --offwhite: #F0F2F5;
+  --gray-100: #E8ECF1;
+  --gray-200: #C5CDD8;
+  --gray-400: #8694A7;
+  --gray-600: #5A6A7E;
+  --green: #22C55E;
+  --green-dark: #16A34A;
+  --red: #EF4444;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --shadow-sm: 0 1px 3px rgba(11,29,58,0.08);
+  --shadow-md: 0 4px 16px rgba(11,29,58,0.12);
+  --shadow-lg: 0 8px 32px rgba(11,29,58,0.16);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--offwhite);
+  color: var(--navy);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ===== HEADER ===== */
+.site-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 50%, var(--navy-mid) 100%);
+  color: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  background: var(--teal);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -1px;
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.logo-text span {
+  color: var(--teal);
+}
+
+.logo-sub {
+  font-size: 11px;
+  color: var(--gray-200);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: -2px;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-link {
+  color: var(--gray-200);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--white);
+  background: rgba(255,255,255,0.1);
+}
+
+.user-badge {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin-left: 12px;
+  padding: 6px 14px 6px 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.user-badge.visible { display: flex; }
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  background: var(--teal);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.user-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.btn-signout {
+  background: none;
+  border: none;
+  color: var(--gray-400);
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 4px;
+  text-decoration: underline;
+  font-family: var(--font-body);
+}
+
+.btn-signout:hover { color: var(--white); }
+
+/* ===== HERO ===== */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 64px 24px 72px;
+  text-align: center;
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0,180,216,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 800;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.hero h1 span { color: var(--teal); }
+
+.hero p {
+  font-size: 18px;
+  color: var(--gray-200);
+  max-width: 600px;
+  margin: 0 auto 32px;
+  position: relative;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  position: relative;
+}
+
+.hero-stat {
+  text-align: center;
+}
+
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.hero-stat-label {
+  font-size: 13px;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ===== MAIN CONTENT ===== */
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* ===== TABS ===== */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 32px;
+  background: var(--white);
+  padding: 6px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  width: fit-content;
+}
+
+.tab {
+  padding: 10px 24px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-600);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab:hover { color: var(--navy); background: var(--gray-100); }
+.tab.active { background: var(--navy); color: var(--white); }
+
+/* ===== EPISODE CARDS ===== */
+.episodes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 24px;
+}
+
+.episode-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s;
+  border: 1px solid var(--gray-100);
+  cursor: pointer;
+}
+
+.episode-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.episode-thumb {
+  position: relative;
+  background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+  padding: 32px 24px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.episode-number {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--teal);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 100px;
+  letter-spacing: 0.5px;
+}
+
+.episode-status {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.episode-status.completed {
+  background: var(--green);
+  color: var(--white);
+}
+
+.episode-status.available {
+  background: rgba(255,255,255,0.15);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.episode-status.coming-soon {
+  background: rgba(244,164,38,0.2);
+  color: var(--gold);
+  border: 1px solid rgba(244,164,38,0.3);
+}
+
+.episode-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.3;
+}
+
+.episode-body {
+  padding: 20px 24px;
+}
+
+.episode-article {
+  font-size: 13px;
+  color: var(--gray-600);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.episode-article strong {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.episode-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.episode-cme {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--teal-dark);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.episode-btn {
+  padding: 8px 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.episode-btn.watch {
+  background: var(--teal);
+  color: var(--white);
+}
+
+.episode-btn.watch:hover { background: var(--teal-dark); }
+
+.episode-btn.claimed {
+  background: var(--gray-100);
+  color: var(--green-dark);
+}
+
+/* ===== EPISODE DETAIL VIEW ===== */
+.episode-detail {
+  display: none;
+}
+
+.episode-detail.visible {
+  display: block;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--teal-dark);
+  cursor: pointer;
+  margin-bottom: 24px;
+  padding: 8px 0;
+}
+
+.back-btn:hover { color: var(--navy); }
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 32px;
+}
+
+@media (max-width: 900px) {
+  .detail-grid { grid-template-columns: 1fr; }
+}
+
+.video-container {
+  background: #000;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  box-shadow: var(--shadow-lg);
+}
+
+.video-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-400);
+  font-size: 16px;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-100);
+}
+
+.detail-card h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--navy);
+}
+
+.article-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: var(--offwhite);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--navy);
+  margin-bottom: 8px;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.article-link:hover {
+  border-color: var(--teal);
+  background: #E8F8FC;
+}
+
+.article-link-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--teal);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.article-link-text {
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.article-link-label {
+  font-size: 11px;
+  color: var(--teal-dark);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.claim-section {
+  text-align: center;
+}
+
+.claim-checklist {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.claim-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--gray-100);
+  font-size: 14px;
+}
+
+.claim-check:last-child { border-bottom: none; }
+
+.claim-check input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--teal);
+  cursor: pointer;
+}
+
+.btn-claim {
+  width: 100%;
+  padding: 14px;
+  background: var(--teal);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-claim:hover { background: var(--teal-dark); }
+.btn-claim:disabled {
+  background: var(--gray-200);
+  cursor: not-allowed;
+}
+
+.btn-claim.claimed-btn {
+  background: var(--green);
+  cursor: default;
+}
+
+/* ===== LOGIN MODAL ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(11,29,58,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.visible {
+  display: flex;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 40px;
+  width: 420px;
+  max-width: 90vw;
+  box-shadow: 0 24px 64px rgba(11,29,58,0.3);
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--gray-400);
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.modal-close:hover { background: var(--gray-100); color: var(--navy); }
+
+.modal h2 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.modal p {
+  color: var(--gray-600);
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--gray-100);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 14px;
+  transition: border-color 0.2s;
+  background: var(--white);
+}
+
+.form-group input:focus, .form-group select:focus {
+  outline: none;
+  border-color: var(--teal);
+}
+
+.btn-login {
+  width: 100%;
+  padding: 14px;
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+
+.btn-login:hover { background: var(--navy-mid); }
+
+.form-toggle {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--gray-600);
+}
+
+.form-toggle a {
+  color: var(--teal-dark);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.form-error {
+  color: var(--red);
+  font-size: 13px;
+  margin-top: 8px;
+  display: none;
+}
+
+/* ===== MY CME TAB ===== */
+.cme-dashboard {
+  display: none;
+}
+
+.cme-dashboard.visible { display: block; }
+
+.cme-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.cme-stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-100);
+  text-align: center;
+}
+
+.cme-stat-card .num {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.cme-stat-card .num.teal { color: var(--teal); }
+.cme-stat-card .num.gold { color: var(--gold); }
+
+.cme-stat-card .label {
+  font-size: 13px;
+  color: var(--gray-600);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.cme-history {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-100);
+  overflow: hidden;
+}
+
+.cme-history-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--gray-100);
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.cme-history-row {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--gray-100);
+  gap: 16px;
+}
+
+.cme-history-row:last-child { border-bottom: none; }
+
+.cme-history-check {
+  width: 32px;
+  height: 32px;
+  background: var(--green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.cme-history-info { flex: 1; }
+
+.cme-history-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.cme-history-date {
+  font-size: 12px;
+  color: var(--gray-400);
+  margin-top: 2px;
+}
+
+.cme-history-credits {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--teal-dark);
+  white-space: nowrap;
+}
+
+.cme-empty {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--gray-400);
+  font-size: 15px;
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+  background: var(--navy);
+  color: var(--gray-400);
+  text-align: center;
+  padding: 32px 24px;
+  font-size: 13px;
+}
+
+.site-footer a {
+  color: var(--teal);
+  text-decoration: none;
+}
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  background: var(--navy);
+  color: var(--white);
+  padding: 16px 24px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 300;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.toast.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.toast.success { border-left: 4px solid var(--green); }
+.toast.error { border-left: 4px solid var(--red); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .header-inner { height: 60px; }
+  .logo-text { font-size: 18px; }
+  .logo-sub { display: none; }
+  .header-nav .nav-link:not(.nav-signin) { display: none; }
+  .hero { padding: 40px 24px 48px; }
+  .hero-stats { gap: 24px; }
+  .hero-stat-num { font-size: 28px; }
+  .episodes-grid { grid-template-columns: 1fr; }
+  .detail-grid { grid-template-columns: 1fr; }
+  .tabs { width: 100%; }
+  .tab { flex: 1; text-align: center; padding: 10px 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">EM</div>
+      <div>
+        <div class="logo-text">EM <span>Journal Club</span></div>
+        <div class="logo-sub">Kaiser Downey • SCPMG</div>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <a class="nav-link active" onclick="showTab('episodes')">Episodes</a>
+      <a class="nav-link" onclick="showTab('mycme')">My CME</a>
+      <a class="nav-link nav-signin" onclick="openModal()" id="signinLink">Sign In</a>
+      <div class="user-badge" id="userBadge">
+        <div class="user-avatar" id="userAvatar"></div>
+        <span class="user-name" id="userName"></span>
+        <button class="btn-signout" onclick="signOut()">Sign out</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <h1>Emergency Medicine <span>Journal Club</span></h1>
+  <p>Evidence-based video discussions on the latest research shaping emergency medicine practice. Watch, read, and earn CME credit.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num" id="totalEpisodes">12</div>
+      <div class="hero-stat-label">Episodes</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">0.5</div>
+      <div class="hero-stat-label">Credits Each</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">6.0</div>
+      <div class="hero-stat-label">Total CME Available</div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="main">
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" id="tabEpisodes" onclick="showTab('episodes')">All Episodes</button>
+    <button class="tab" id="tabMyCme" onclick="showTab('mycme')">My CME Progress</button>
+  </div>
+
+  <!-- EPISODES LIST VIEW -->
+  <div class="episodes-grid" id="episodesGrid"></div>
+
+  <!-- EPISODE DETAIL VIEW -->
+  <div class="episode-detail" id="episodeDetail"></div>
+
+  <!-- MY CME DASHBOARD -->
+  <div class="cme-dashboard" id="cmeDashboard"></div>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <p>EM Journal Club &copy; 2026 &mdash; Kaiser Downey Medical Center, Southern California Permanente Medical Group</p>
+  <p style="margin-top:8px;">For questions or feedback, contact the <a href="#">Department of Emergency Medicine</a></p>
+</footer>
+
+<!-- LOGIN/REGISTER MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <h2>Welcome Back</h2>
+      <p>Sign in to claim and track your CME credits.</p>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="you@kp.org">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter your password">
+      </div>
+      <div class="form-error" id="loginError"></div>
+      <button class="btn-login" onclick="handleLogin()">Sign In</button>
+      <div class="form-toggle">Don't have an account? <a onclick="toggleForm('register')">Register here</a></div>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div id="registerForm" style="display:none;">
+      <h2>Create Account</h2>
+      <p>Register to start tracking your CME credits.</p>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="regName" placeholder="First and last name">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="regEmail" placeholder="you@kp.org">
+      </div>
+      <div class="form-group">
+        <label>NPI Number (optional)</label>
+        <input type="text" id="regNPI" placeholder="10-digit NPI">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="regPassword" placeholder="Create a password">
+      </div>
+      <div class="form-error" id="regError"></div>
+      <button class="btn-login" onclick="handleRegister()">Create Account</button>
+      <div class="form-toggle">Already have an account? <a onclick="toggleForm('login')">Sign in</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== EPISODE DATA =====
+const episodes = [
+  {
+    id: 1,
+    number: "EP 01",
+    title: "Tenecteplase vs Alteplase for Acute Ischemic Stroke",
+    status: "available",
+    videoUrl: "https://www.youtube.com/watch?v=CWBFyLhqM5Y",
+    cmeCredits: 0.5,
+    primaryArticle: {
+      title: 'Menon BK, et al. "Intravenous tenecteplase compared with alteplase for acute ischaemic stroke in Canada (AcT)." Lancet 2022;400:161-169.',
+      url: "https://pubmed.ncbi.nlm.nih.gov/35779553/"
+    },
+    supportingArticles: [
+      { title: "ORIGINAL Trial — Meng X, et al. JAMA 2024", url: "https://pubmed.ncbi.nlm.nih.gov/39264623/" },
+      { title: "TRACE-2 Trial — Wang Y, et al. Lancet 2023", url: "https://pubmed.ncbi.nlm.nih.gov/36774935/" },
+      { title: "ATTEST-2 Trial — Lancet Neurology 2024", url: "https://www.thelancet.com/journals/laneur/article/PIIS1474-4422(24)00377-6/fulltext" },
+      { title: "Meta-analysis (11 RCTs) — J Neuroimaging 2025", url: "https://www.sciencedirect.com/science/article/pii/S1052305725000795" }
+    ]
+  },
+  {
+    id: 2,
+    number: "EP 02",
+    title: "Pigtail Catheters vs Chest Tubes in Traumatic Pneumothorax",
+    status: "coming-soon",
+    videoUrl: "",
+    cmeCredits: 0.5,
+    primaryArticle: {
+      title: 'Kulvatunyou N, et al. "Pigtail catheter vs chest tube — RCT." Br J Surg 2014.',
+      url: "https://pubmed.ncbi.nlm.nih.gov/24375295/"
+    },
+    supportingArticles: [
+      { title: "Chang SH, et al. Systematic review — CHEST 2018", url: "https://journal.chestnet.org/article/S0012-3692(18)30924-3/fulltext" }
+    ]
+  },
+  {
+    id: 3,
+    number: "EP 03",
+    title: "Peripheral Vasopressors in the Emergency Department",
+    status: "coming-soon",
+    videoUrl: "",
+    cmeCredits: 0.5,
+    primaryArticle: {
+      title: 'Khan A, et al. "Peripheral Vasopressor Use in Early Sepsis" (CLOVERS). JAMA Surgery 2025.',
+      url: "https://pubmed.ncbi.nlm.nih.gov/40864467/"
+    },
+    supportingArticles: [
+      { title: "Owen VS, et al. Systematic review — Critical Care 2021", url: "https://link.springer.com/article/10.1186/s13054-021-03553-1" }
+    ]
+  },
+  {
+    id: 4,
+    number: "EP 04",
+    title: "Levetiracetam (Keppra) for Seizure Prophylaxis in ICH",
+    status: "coming-soon",
+    videoUrl: "",
+    cmeCredits: 0.5,
+    primaryArticle: {
+      title: 'Peter-Derex L, et al. "PEACH Trial." Lancet Neurology 2022.',
+      url: "https://rebelem.com/unpacking-the-peach-trial-what-is-levetiracetams-role-in-spontaneous-intracerebral-hemorrhage/"
+    },
+    supportingArticles: [
+      { title: "Fang Y, et al. Systematic review — Neurocritical Care 2021", url: "https://pubmed.ncbi.nlm.nih.gov/34286461/" }
+    ]
+  },
+  {
+    id: 5,
+    number: "EP 05",
+    title: "RhoGAM — Updated Dosing & Indications in the ED",
+    status: "coming-soon",
+    videoUrl: "",
+    cmeCredits: 0.5,
+    primaryArticle: {
+      title: 'ACEP Now 2025: "New Recommendations for RhD IG at Less than 12 Weeks."',
+      url: "https://www.acepnow.com/article/new-recommendations-for-administering-rhd-ig-at-less-than-12-weeks/"
+    },
+    supportingArticles: [
+      { title: "AABB Bulletin #24-02 (July 2024)", url: "https://www.aabb.org/docs/default-source/default-document-library/resources/association-bulletins/ab24-02.pdf" }
+    ]
+  },
+  {
+    id: 6,
+    number: "EP 06",
+    title: "Esmolol for Refractory Ventricular Fibrillation",
+    status: "coming-soon",
+    videoUrl: "",
+    cmeCredits: 0.5,
+    primaryArticle: {
+      title: 'Lee YH, et al. "Refractory VF treated with esmolol." Resuscitation 2016.',
+      url: "https://pubmed.ncbi.nlm.nih.gov/27523955/"
+    },
+    supportingArticles: [
+      { title: "Lian R, et al. Case series — Frontiers in Pharmacology 2022", url: "https://www.frontiersin.org/journals/pharmacology/articles/10.3389/fphar.2022.930245/full" }
+    ]
+  },
+  {
+    id: 7, number: "EP 07", title: "Ketamine vs Opioids for Acute Pain in the ED", status: "coming-soon", videoUrl: "", cmeCredits: 0.5,
+    primaryArticle: { title: 'Motov S, et al. "Subdissociative-Dose Ketamine vs Morphine." Ann Emerg Med 2015.', url: "" },
+    supportingArticles: []
+  },
+  {
+    id: 8, number: "EP 08", title: "The HEART Score for Chest Pain Risk Stratification", status: "coming-soon", videoUrl: "", cmeCredits: 0.5,
+    primaryArticle: { title: 'Mahler SA, et al. "The HEART Pathway randomized trial." Circ CQO 2015.', url: "" },
+    supportingArticles: []
+  },
+  {
+    id: 9, number: "EP 09", title: "Push-Dose Epinephrine in the ED", status: "coming-soon", videoUrl: "", cmeCredits: 0.5,
+    primaryArticle: { title: 'Weingart S. "Push-dose pressors for immediate BP control." Clin Exp Emerg Med 2015.', url: "" },
+    supportingArticles: []
+  },
+  {
+    id: 10, number: "EP 10", title: "PECARN Rules — Pediatric Head Trauma CT Decisions", status: "coming-soon", videoUrl: "", cmeCredits: 0.5,
+    primaryArticle: { title: 'Kuppermann N, et al. "Children at low risk of brain injuries." Lancet 2009.', url: "" },
+    supportingArticles: []
+  },
+  {
+    id: 11, number: "EP 11", title: "Targeted Temperature Management After Cardiac Arrest (TTM2)", status: "coming-soon", videoUrl: "", cmeCredits: 0.5,
+    primaryArticle: { title: 'Dankiewicz J, et al. "Hypothermia vs Normothermia — TTM2." NEJM 2021.', url: "" },
+    supportingArticles: []
+  },
+  {
+    id: 12, number: "EP 12", title: "ACEP Clinical Policy — Mild TBI / Concussion in Adults", status: "coming-soon", videoUrl: "", cmeCredits: 0.5,
+    primaryArticle: { title: 'ACEP Clinical Policy. Ann Emerg Med (most recent update).', url: "" },
+    supportingArticles: []
+  }
+];
+
+// ===== STATE =====
+let currentUser = null;
+let claimedCredits = {}; // { episodeId: { date, credits } }
+
+// Load from localStorage
+function loadState() {
+  const saved = localStorage.getItem('emjc_user');
+  if (saved) {
+    currentUser = JSON.parse(saved);
+    updateUserUI();
+  }
+  const savedCredits = localStorage.getItem('emjc_credits_' + (currentUser?.email || ''));
+  if (savedCredits) claimedCredits = JSON.parse(savedCredits);
+}
+
+function saveState() {
+  if (currentUser) {
+    localStorage.setItem('emjc_user', JSON.stringify(currentUser));
+    localStorage.setItem('emjc_credits_' + currentUser.email, JSON.stringify(claimedCredits));
+  }
+}
+
+// ===== RENDER EPISODES GRID =====
+function renderEpisodes() {
+  const grid = document.getElementById('episodesGrid');
+  grid.innerHTML = episodes.map(ep => {
+    const claimed = claimedCredits[ep.id];
+    const statusLabel = claimed ? 'completed' : ep.status;
+    const statusText = claimed ? '✓ Completed' : (ep.status === 'available' ? 'Available' : 'Coming Soon');
+    return `
+      <div class="episode-card" onclick="openEpisode(${ep.id})">
+        <div class="episode-thumb">
+          <span class="episode-number">${ep.number}</span>
+          <span class="episode-status ${statusLabel}">${statusText}</span>
+          <div class="episode-title">${ep.title}</div>
+        </div>
+        <div class="episode-body">
+          <div class="episode-article"><strong>Primary:</strong> ${ep.primaryArticle.title}</div>
+          <div class="episode-meta">
+            <span class="episode-cme">⬡ ${ep.cmeCredits} CME Credit</span>
+            <button class="episode-btn ${claimed ? 'claimed' : 'watch'}">${claimed ? '✓ Claimed' : 'View Episode'}</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ===== OPEN EPISODE DETAIL =====
+function openEpisode(id) {
+  const ep = episodes.find(e => e.id === id);
+  if (!ep) return;
+
+  const claimed = claimedCredits[ep.id];
+
+  document.getElementById('episodesGrid').style.display = 'none';
+  document.getElementById('heroSection').style.display = 'none';
+  document.querySelector('.tabs').style.display = 'none';
+
+  const detail = document.getElementById('episodeDetail');
+  detail.classList.add('visible');
+
+  // Extract YouTube video ID from various URL formats
+  function getYouTubeId(url) {
+    if (!url) return null;
+    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+    return match ? match[1] : null;
+  }
+
+  const ytId = getYouTubeId(ep.videoUrl);
+  let videoEmbed;
+  if (ytId) {
+    videoEmbed = `
+      <a href="https://www.youtube.com/watch?v=${ytId}" target="_blank" rel="noopener" style="display:block;width:100%;height:100%;position:relative;text-decoration:none;">
+        <img src="https://img.youtube.com/vi/${ytId}/maxresdefault.jpg" alt="Video thumbnail" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg'">
+        <div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0.35);transition:background 0.2s;">
+          <div style="width:72px;height:72px;background:rgba(255,0,0,0.9);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;box-shadow:0 4px 20px rgba(0,0,0,0.4);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="white"><polygon points="8,5 20,12 8,19"/></svg>
+          </div>
+          <span style="color:white;font-size:15px;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Watch on YouTube</span>
+        </div>
+      </a>`;
+  } else {
+    videoEmbed = `<div class="video-placeholder"><span style="font-size:48px">▶</span><span>${ep.status === 'coming-soon' ? 'Coming Soon' : 'Video coming soon'}</span></div>`;
+  }
+
+  const supportingHTML = ep.supportingArticles.map(a => `
+    <a class="article-link" href="${a.url}" target="_blank" rel="noopener">
+      <div class="article-link-icon">📄</div>
+      <div>
+        <div class="article-link-label">Supporting</div>
+        <div class="article-link-text">${a.title}</div>
+      </div>
+    </a>
+  `).join('');
+
+  const claimHTML = claimed
+    ? `<button class="btn-claim claimed-btn">✓ Credit Claimed on ${claimed.date}</button>`
+    : `
+      <div class="claim-checklist">
+        <label class="claim-check"><input type="checkbox" id="checkWatched"> I watched the full episode</label>
+        <label class="claim-check"><input type="checkbox" id="checkRead"> I read the primary article</label>
+      </div>
+      <button class="btn-claim" id="btnClaim" disabled onclick="claimCredit(${ep.id})">Claim ${ep.cmeCredits} CME Credit</button>
+    `;
+
+  detail.innerHTML = `
+    <button class="back-btn" onclick="closeEpisode()">← Back to All Episodes</button>
+    <h2 style="font-family:var(--font-display);font-size:28px;font-weight:800;margin-bottom:24px;">${ep.number}: ${ep.title}</h2>
+    <div class="detail-grid">
+      <div>
+        <div class="video-container">${videoEmbed}</div>
+      </div>
+      <div class="detail-sidebar">
+        <div class="detail-card">
+          <h3>📖 Articles</h3>
+          <a class="article-link" href="${ep.primaryArticle.url}" target="_blank" rel="noopener" style="${!ep.primaryArticle.url ? 'pointer-events:none;opacity:0.5' : ''}">
+            <div class="article-link-icon" style="background:var(--gold)">📄</div>
+            <div>
+              <div class="article-link-label">Primary Article</div>
+              <div class="article-link-text">${ep.primaryArticle.title}</div>
+            </div>
+          </a>
+          ${supportingHTML}
+        </div>
+        <div class="detail-card">
+          <h3>🏅 Claim CME Credit</h3>
+          ${!currentUser
+            ? '<p style="font-size:14px;color:var(--gray-600);margin-bottom:16px;">You must be signed in to claim credit.</p><button class="btn-claim" onclick="openModal()">Sign In to Claim</button>'
+            : claimHTML
+          }
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Add checkbox listeners
+  if (!claimed && currentUser) {
+    const checkWatched = document.getElementById('checkWatched');
+    const checkRead = document.getElementById('checkRead');
+    const btnClaim = document.getElementById('btnClaim');
+    if (checkWatched && checkRead && btnClaim) {
+      const updateBtn = () => {
+        btnClaim.disabled = !(checkWatched.checked && checkRead.checked);
+      };
+      checkWatched.addEventListener('change', updateBtn);
+      checkRead.addEventListener('change', updateBtn);
+    }
+  }
+}
+
+function closeEpisode() {
+  document.getElementById('episodeDetail').classList.remove('visible');
+  document.getElementById('episodeDetail').innerHTML = '';
+  document.getElementById('episodesGrid').style.display = '';
+  document.getElementById('heroSection').style.display = '';
+  document.querySelector('.tabs').style.display = '';
+}
+
+// ===== CLAIM CREDIT =====
+function claimCredit(id) {
+  if (!currentUser) { openModal(); return; }
+  const ep = episodes.find(e => e.id === id);
+  const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  claimedCredits[id] = { date: today, credits: ep.cmeCredits };
+  saveState();
+  renderEpisodes();
+  openEpisode(id);
+  showToast(`${ep.cmeCredits} CME credit claimed for "${ep.title}"`, 'success');
+}
+
+// ===== CERTIFICATE GENERATION =====
+function generateCertificate() {
+  if (!currentUser) return;
+  const selectedYear = document.getElementById('certYear').value;
+  const claimedList = Object.entries(claimedCredits);
+
+  const filtered = selectedYear === 'all'
+    ? claimedList
+    : claimedList.filter(([_, c]) => new Date(c.date).getFullYear() === parseInt(selectedYear));
+
+  if (filtered.length === 0) {
+    showToast('No credits found for the selected year.', 'error');
+    return;
+  }
+
+  const totalCredits = filtered.reduce((sum, [_, c]) => sum + c.credits, 0);
+  const yearLabel = selectedYear === 'all' ? 'All Years' : selectedYear;
+  const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+  const completedEpisodes = filtered.map(([epId, data]) => {
+    const ep = episodes.find(e => e.id === parseInt(epId));
+    return { title: `${ep.number}: ${ep.title}`, date: data.date, credits: data.credits };
+  });
+
+  const episodeRows = completedEpisodes.map(ep =>
+    `<tr>
+      <td style="padding:8px 16px;border-bottom:1px solid #E8ECF1;font-size:11px;color:#0B1D3A;">${ep.title}</td>
+      <td style="padding:8px 16px;border-bottom:1px solid #E8ECF1;font-size:11px;color:#5A6A7E;text-align:center;">${ep.date}</td>
+      <td style="padding:8px 16px;border-bottom:1px solid #E8ECF1;font-size:11px;color:#0096B7;text-align:center;font-weight:600;">${ep.credits}</td>
+    </tr>`
+  ).join('');
+
+  const certHTML = `
+    <html>
+    <head>
+      <title>CME Certificate — ${currentUser.name}</title>
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap');
+        @page { size: letter landscape; margin: 0; }
+        body { margin: 0; padding: 0; font-family: 'DM Sans', sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .cert-page { width: 10in; height: 7.5in; margin: 0 auto; position: relative; background: #FFFFFF; overflow: hidden; page-break-after: always; }
+        .cert-border { position: absolute; top: 20px; left: 20px; right: 20px; bottom: 20px; border: 3px solid #0B1D3A; border-radius: 4px; }
+        .cert-border-inner { position: absolute; top: 28px; left: 28px; right: 28px; bottom: 28px; border: 1px solid #C5CDD8; border-radius: 2px; }
+        .cert-corner { position: absolute; width: 40px; height: 40px; border: 2px solid #00B4D8; }
+        .cert-corner.tl { top: 36px; left: 36px; border-right: none; border-bottom: none; }
+        .cert-corner.tr { top: 36px; right: 36px; border-left: none; border-bottom: none; }
+        .cert-corner.bl { bottom: 36px; left: 36px; border-right: none; border-top: none; }
+        .cert-corner.br { bottom: 36px; right: 36px; border-left: none; border-top: none; }
+        .cert-content { position: relative; z-index: 1; padding: 60px 80px 40px; text-align: center; height: 100%; display: flex; flex-direction: column; }
+        .cert-header-bar { background: #0B1D3A; color: white; padding: 12px 32px; display: inline-flex; align-items: center; gap: 12px; border-radius: 4px; margin: 0 auto 20px; }
+        .cert-logo { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 800; }
+        .cert-logo span { color: #00B4D8; }
+        .cert-title { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 800; color: #0B1D3A; margin-bottom: 6px; letter-spacing: -0.5px; }
+        .cert-subtitle { font-size: 13px; color: #8694A7; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 24px; }
+        .cert-recipient { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #0096B7; margin-bottom: 4px; }
+        .cert-npi { font-size: 12px; color: #8694A7; margin-bottom: 16px; }
+        .cert-text { font-size: 13px; color: #5A6A7E; line-height: 1.6; max-width: 600px; margin: 0 auto 20px; }
+        .cert-credits-box { display: inline-flex; align-items: baseline; gap: 8px; background: #F0F2F5; padding: 12px 32px; border-radius: 8px; margin: 0 auto 20px; }
+        .cert-credits-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 800; color: #0B1D3A; }
+        .cert-credits-label { font-size: 14px; color: #5A6A7E; font-weight: 500; }
+        .cert-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: flex-end; padding-top: 16px; border-top: 1px solid #E8ECF1; }
+        .cert-footer-col { text-align: center; }
+        .cert-sig-line { width: 180px; border-bottom: 1px solid #0B1D3A; margin-bottom: 6px; }
+        .cert-sig-name { font-size: 11px; color: #0B1D3A; font-weight: 600; }
+        .cert-sig-title { font-size: 10px; color: #8694A7; }
+        .cert-date { font-size: 11px; color: #5A6A7E; }
+        .cert-org { font-size: 10px; color: #8694A7; }
+
+        .detail-page { width: 10in; min-height: 7.5in; margin: 0 auto; padding: 48px 64px; background: #FFFFFF; page-break-before: always; }
+        .detail-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: #0B1D3A; margin-bottom: 4px; }
+        .detail-sub { font-size: 12px; color: #8694A7; margin-bottom: 24px; }
+        .detail-table { width: 100%; border-collapse: collapse; }
+        .detail-table th { padding: 10px 16px; background: #0B1D3A; color: white; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; }
+        .detail-table th:nth-child(2), .detail-table th:nth-child(3) { text-align: center; }
+        .detail-total { margin-top: 16px; text-align: right; font-size: 14px; font-weight: 700; color: #0B1D3A; }
+      </style>
+    </head>
+    <body>
+      <!-- PAGE 1: CERTIFICATE -->
+      <div class="cert-page">
+        <div class="cert-border"></div>
+        <div class="cert-border-inner"></div>
+        <div class="cert-corner tl"></div>
+        <div class="cert-corner tr"></div>
+        <div class="cert-corner bl"></div>
+        <div class="cert-corner br"></div>
+        <div class="cert-content">
+          <div class="cert-header-bar">
+            <div class="cert-logo">EM <span>Journal Club</span></div>
+          </div>
+          <div class="cert-title">Certificate of Completion</div>
+          <div class="cert-subtitle">Continuing Medical Education</div>
+          <div style="font-size:13px;color:#8694A7;margin-bottom:12px;">This is to certify that</div>
+          <div class="cert-recipient">${currentUser.name}${currentUser.npi ? ', MD' : ''}</div>
+          ${currentUser.npi ? `<div class="cert-npi">NPI: ${currentUser.npi}</div>` : '<div style="margin-bottom:16px;"></div>'}
+          <div class="cert-text">has successfully completed the following Continuing Medical Education activities through the EM Journal Club Video Podcast Series during <strong>${yearLabel}</strong>.</div>
+          <div class="cert-credits-box">
+            <span class="cert-credits-num">${totalCredits.toFixed(1)}</span>
+            <span class="cert-credits-label">AMA PRA Category 1 Credits™</span>
+          </div>
+          <div class="cert-footer">
+            <div class="cert-footer-col">
+              <div class="cert-sig-line"></div>
+              <div class="cert-sig-name">Program Director</div>
+              <div class="cert-sig-title">EM Journal Club</div>
+            </div>
+            <div class="cert-footer-col">
+              <div class="cert-date">Issued: ${today}</div>
+              <div class="cert-org">Kaiser Downey Medical Center</div>
+              <div class="cert-org">Southern California Permanente Medical Group</div>
+            </div>
+            <div class="cert-footer-col">
+              <div class="cert-sig-line"></div>
+              <div class="cert-sig-name">CME Committee</div>
+              <div class="cert-sig-title">SCPMG</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 2: DETAIL -->
+      <div class="detail-page">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+          <div style="background:#0B1D3A;color:white;padding:6px 14px;border-radius:4px;font-family:'Playfair Display',serif;font-size:14px;font-weight:800;">EM <span style="color:#00B4D8;">Journal Club</span></div>
+        </div>
+        <div class="detail-title">CME Credit Detail — ${currentUser.name}</div>
+        <div class="detail-sub">${yearLabel} | Generated ${today}</div>
+        <table class="detail-table">
+          <thead>
+            <tr>
+              <th>Episode</th>
+              <th>Date Completed</th>
+              <th>Credits</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${episodeRows}
+          </tbody>
+        </table>
+        <div class="detail-total">Total Credits: ${totalCredits.toFixed(1)} AMA PRA Category 1™</div>
+        <div style="margin-top:40px;padding-top:16px;border-top:1px solid #E8ECF1;font-size:10px;color:#8694A7;line-height:1.6;">
+          Kaiser Downey Medical Center — Department of Emergency Medicine<br>
+          Southern California Permanente Medical Group<br>
+          This certificate confirms the above-named physician has completed the listed CME activities by viewing the associated video episode and reading the designated journal article(s) for each topic.
+        </div>
+      </div>
+
+      <script>window.onload = function() { window.print(); };</script>
+    </body>
+    </html>
+  `;
+
+  const certWindow = window.open('', '_blank');
+  certWindow.document.write(certHTML);
+  certWindow.document.close();
+}
+
+// ===== CME DASHBOARD =====
+function renderCMEDashboard() {
+  const dashboard = document.getElementById('cmeDashboard');
+  if (!currentUser) {
+    dashboard.innerHTML = `
+      <div style="text-align:center;padding:80px 24px;">
+        <h2 style="font-family:var(--font-display);font-size:28px;margin-bottom:12px;">Track Your CME Credits</h2>
+        <p style="color:var(--gray-600);margin-bottom:24px;">Sign in to view your credit history and track your progress.</p>
+        <button class="btn-claim" style="max-width:200px;margin:0 auto;" onclick="openModal()">Sign In</button>
+      </div>
+    `;
+    return;
+  }
+
+  const claimedList = Object.entries(claimedCredits);
+  const totalCredits = claimedList.reduce((sum, [_, c]) => sum + c.credits, 0);
+  const totalAvailable = episodes.length * 0.5;
+
+  const historyRows = claimedList.map(([epId, data]) => {
+    const ep = episodes.find(e => e.id === parseInt(epId));
+    return `
+      <div class="cme-history-row">
+        <div class="cme-history-check">✓</div>
+        <div class="cme-history-info">
+          <div class="cme-history-title">${ep.number}: ${ep.title}</div>
+          <div class="cme-history-date">Claimed ${data.date}</div>
+        </div>
+        <div class="cme-history-credits">${data.credits} Credit</div>
+      </div>
+    `;
+  }).join('');
+
+  // Get unique years from claimed credits
+  const years = [...new Set(claimedList.map(([_, c]) => {
+    const d = new Date(c.date);
+    return d.getFullYear();
+  }))].sort((a, b) => b - a);
+  const currentYear = new Date().getFullYear();
+  if (!years.includes(currentYear)) years.unshift(currentYear);
+  const yearOptions = years.map(y => `<option value="${y}">${y}</option>`).join('');
+
+  dashboard.innerHTML = `
+    <div class="cme-summary">
+      <div class="cme-stat-card">
+        <div class="num teal">${totalCredits.toFixed(1)}</div>
+        <div class="label">Credits Earned</div>
+      </div>
+      <div class="cme-stat-card">
+        <div class="num gold">${totalAvailable.toFixed(1)}</div>
+        <div class="label">Total Available</div>
+      </div>
+      <div class="cme-stat-card">
+        <div class="num">${claimedList.length}</div>
+        <div class="label">Episodes Completed</div>
+      </div>
+      <div class="cme-stat-card">
+        <div class="num">${episodes.length - claimedList.length}</div>
+        <div class="label">Remaining</div>
+      </div>
+    </div>
+    <div class="cme-history">
+      <div class="cme-history-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <span>Credit History — ${currentUser.name}</span>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <select id="certYear" style="padding:8px 12px;border:2px solid var(--gray-100);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:13px;background:var(--white);cursor:pointer;">
+            <option value="all">All Years</option>
+            ${yearOptions}
+          </select>
+          <button onclick="generateCertificate()" style="padding:8px 18px;background:var(--navy);color:var(--white);border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background 0.2s;" onmouseover="this.style.background='var(--navy-mid)'" onmouseout="this.style.background='var(--navy)'">📄 Download Certificate</button>
+        </div>
+      </div>
+      ${historyRows || '<div class="cme-empty">No credits claimed yet. Watch an episode and read the article to get started.</div>'}
+    </div>
+  `;
+}
+
+// ===== TABS =====
+function showTab(tab) {
+  closeEpisode();
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+
+  if (tab === 'episodes') {
+    document.getElementById('tabEpisodes').classList.add('active');
+    document.getElementById('episodesGrid').style.display = '';
+    document.getElementById('cmeDashboard').classList.remove('visible');
+    document.getElementById('heroSection').style.display = '';
+    document.querySelector('.header-nav .nav-link:first-child').classList.add('active');
+  } else {
+    document.getElementById('tabMyCme').classList.add('active');
+    document.getElementById('episodesGrid').style.display = 'none';
+    document.getElementById('cmeDashboard').classList.add('visible');
+    document.getElementById('heroSection').style.display = 'none';
+    document.querySelector('.header-nav .nav-link:nth-child(2)').classList.add('active');
+    renderCMEDashboard();
+  }
+}
+
+// ===== AUTH =====
+function openModal() {
+  document.getElementById('modalOverlay').classList.add('visible');
+  toggleForm('login');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('visible');
+}
+
+function toggleForm(form) {
+  document.getElementById('loginForm').style.display = form === 'login' ? 'block' : 'none';
+  document.getElementById('registerForm').style.display = form === 'register' ? 'block' : 'none';
+}
+
+function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const errorEl = document.getElementById('loginError');
+
+  if (!email || !password) {
+    errorEl.textContent = 'Please enter email and password.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  // Check if user exists in localStorage
+  const users = JSON.parse(localStorage.getItem('emjc_users') || '{}');
+  if (users[email] && users[email].password === password) {
+    currentUser = { name: users[email].name, email, npi: users[email].npi };
+    saveState();
+    // Load their credits
+    const savedCredits = localStorage.getItem('emjc_credits_' + email);
+    if (savedCredits) claimedCredits = JSON.parse(savedCredits);
+    updateUserUI();
+    closeModal();
+    renderEpisodes();
+    showToast(`Welcome back, Dr. ${currentUser.name.split(' ').pop()}!`, 'success');
+  } else {
+    errorEl.textContent = 'Invalid email or password.';
+    errorEl.style.display = 'block';
+  }
+}
+
+function handleRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const npi = document.getElementById('regNPI').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const errorEl = document.getElementById('regError');
+
+  if (!name || !email || !password) {
+    errorEl.textContent = 'Please fill in all required fields.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  if (password.length < 4) {
+    errorEl.textContent = 'Password must be at least 4 characters.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  const users = JSON.parse(localStorage.getItem('emjc_users') || '{}');
+  if (users[email]) {
+    errorEl.textContent = 'An account with this email already exists.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  users[email] = { name, password, npi };
+  localStorage.setItem('emjc_users', JSON.stringify(users));
+
+  currentUser = { name, email, npi };
+  claimedCredits = {};
+  saveState();
+  updateUserUI();
+  closeModal();
+  renderEpisodes();
+  showToast(`Account created! Welcome, Dr. ${name.split(' ').pop()}.`, 'success');
+}
+
+function signOut() {
+  currentUser = null;
+  claimedCredits = {};
+  localStorage.removeItem('emjc_user');
+  updateUserUI();
+  renderEpisodes();
+  showTab('episodes');
+  showToast('Signed out successfully.', 'success');
+}
+
+function updateUserUI() {
+  const badge = document.getElementById('userBadge');
+  const signinLink = document.getElementById('signinLink');
+  if (currentUser) {
+    badge.classList.add('visible');
+    document.getElementById('userAvatar').textContent = currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase();
+    document.getElementById('userName').textContent = currentUser.name;
+    signinLink.style.display = 'none';
+  } else {
+    badge.classList.remove('visible');
+    signinLink.style.display = '';
+  }
+}
+
+// ===== TOAST =====
+function showToast(message, type = 'success') {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.className = 'toast ' + type + ' visible';
+  setTimeout(() => toast.classList.remove('visible'), 3500);
+}
+
+// ===== INIT =====
+loadState();
+renderEpisodes();
+
+// Close modal on overlay click
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+</body>
+</html>
