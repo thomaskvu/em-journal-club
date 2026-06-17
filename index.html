@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
 <title>EM Journal Club | Kaiser Downey Emergency Medicine</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 <style>
@@ -69,16 +70,16 @@ body {
 }
 
 .logo-icon {
-  width: 42px;
-  height: 42px;
+  padding: 10px 14px;
   background: var(--teal);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 800;
   color: var(--white);
+  letter-spacing: 1px;
   letter-spacing: -1px;
 }
 
@@ -883,10 +884,10 @@ body {
 <header class="site-header">
   <div class="header-inner">
     <div class="logo" onclick="showTab('episodes')" style="cursor:pointer;">
-      <div class="logo-icon">EM</div>
+      <div class="logo-icon">SCPMG</div>
       <div>
         <div class="logo-text">EM <span>Journal Club</span></div>
-        <div class="logo-sub">Kaiser Downey • SCPMG</div>
+        <div class="logo-sub">Kaiser Downey Medical Center</div>
       </div>
     </div>
     <nav class="header-nav">
@@ -943,7 +944,7 @@ body {
 <!-- FOOTER -->
 <footer class="site-footer">
   <p>EM Journal Club &copy; 2026 &mdash; Kaiser Downey Medical Center, Southern California Permanente Medical Group</p>
-  <p style="margin-top:8px;">For questions or feedback, contact the <a href="#">Department of Emergency Medicine</a></p>
+  <p style="margin-top:8px;">For questions or feedback, contact Thomas Vu, MD &mdash; Series Creator &amp; Host &nbsp;|&nbsp; <a href="mailto:Thomas.K.Vu@kp.org">Thomas.K.Vu@kp.org</a></p>
 </footer>
 
 <!-- LOGIN/REGISTER MODAL -->
@@ -954,7 +955,10 @@ body {
     <!-- LOGIN FORM -->
     <div id="loginForm">
       <h2>Welcome Back</h2>
-      <p>Sign in to claim and track your CME credits.</p>
+      <p>Sign in to track your completed episodes.</p>
+      <div style="background:#E8F8FC;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#0096B7;line-height:1.5;">
+        <strong>Reminder:</strong> This is a site-specific login — use the email and password you created when registering on this website, not your Kaiser/KP credentials.
+      </div>
       <div class="form-group">
         <label>Email</label>
         <input type="email" id="loginEmail" placeholder="you@kp.org">
@@ -965,13 +969,17 @@ body {
       </div>
       <div class="form-error" id="loginError"></div>
       <button class="btn-login" onclick="handleLogin()">Sign In</button>
+      <div style="text-align:center;margin-top:10px;"><a onclick="forgotPassword()" style="font-size:13px;color:var(--teal-dark);cursor:pointer;text-decoration:none;font-weight:500;">Forgot password?</a></div>
       <div class="form-toggle">Don't have an account? <a onclick="toggleForm('register')">Register here</a></div>
     </div>
 
     <!-- REGISTER FORM -->
     <div id="registerForm" style="display:none;">
       <h2>Create Account</h2>
-      <p>Register to start tracking your CME credits.</p>
+      <p>Register to start tracking your completed episodes.</p>
+      <div style="background:#FFF8E8;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#B8860B;line-height:1.5;">
+        <strong>Note:</strong> This creates an account for tracking your completed episodes on this website. Password must be at least 6 characters. You can use "Forgot password?" on the sign-in page if you need to reset it.
+      </div>
       <div class="form-group">
         <label>Full Name</label>
         <input type="text" id="regName" placeholder="First and last name">
@@ -998,6 +1006,11 @@ body {
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+<!-- FIREBASE SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
 <script>
 // ===== EPISODE DATA =====
 const episodes = [
@@ -1007,10 +1020,10 @@ const episodes = [
     title: "Tenecteplase vs Alteplase for Acute Ischemic Stroke",
     status: "available",
     videoUrl: "https://www.youtube.com/watch?v=M5xccZtB_r4",
-    surveyUrl: "https://forms.office.com/Pages/ResponsePage.aspx",
+    surveyUrl: "https://forms.office.com/r/vwfVaNrtU0",
     releaseDate: "May 1, 2026",
     cmeCredits: 0.5,
-    disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose.",
+    disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.",
     learningObjectives: [
       "Compare the key pharmacologic differences between tenecteplase and alteplase",
       "Summarize the design and findings of the AcT trial",
@@ -1035,7 +1048,7 @@ const episodes = [
     videoUrl: "",
     releaseDate: "",
     cmeCredits: 0.5,
-    disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose.",
+    disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.",
     learningObjectives: ["Learning objectives will be posted when this episode is released."],
     primaryArticle: {
       title: 'Kulvatunyou N, et al. "Pigtail catheter vs chest tube — RCT." Br J Surg 2014.',
@@ -1053,7 +1066,7 @@ const episodes = [
     videoUrl: "",
     releaseDate: "",
     cmeCredits: 0.5,
-    disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose.",
+    disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.",
     learningObjectives: ["Learning objectives will be posted when this episode is released."],
     primaryArticle: {
       title: 'Khan A, et al. "Peripheral Vasopressor Use in Early Sepsis" (CLOVERS). JAMA Surgery 2025.',
@@ -1064,72 +1077,98 @@ const episodes = [
     ]
   },
   {
-    id: 4, number: "EP 04", title: "Levetiracetam (Keppra) for Seizure Prophylaxis in ICH", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
+    id: 4, number: "EP 04", title: "Levetiracetam (Keppra) for Seizure Prophylaxis in ICH", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
     primaryArticle: { title: 'Peter-Derex L, et al. "PEACH Trial." Lancet Neurology 2022.', url: "https://rebelem.com/unpacking-the-peach-trial-what-is-levetiracetams-role-in-spontaneous-intracerebral-hemorrhage/" },
     supportingArticles: [ { title: "Fang Y, et al. Systematic review — Neurocritical Care 2021", url: "https://pubmed.ncbi.nlm.nih.gov/34286461/" } ]
   },
   {
-    id: 5, number: "EP 05", title: "RhoGAM — Updated Dosing & Indications in the ED", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
+    id: 5, number: "EP 05", title: "RhoGAM — Updated Dosing & Indications in the ED", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
     primaryArticle: { title: 'ACEP Now 2025: "New Recommendations for RhD IG at Less than 12 Weeks."', url: "https://www.acepnow.com/article/new-recommendations-for-administering-rhd-ig-at-less-than-12-weeks/" },
     supportingArticles: [ { title: "AABB Bulletin #24-02 (July 2024)", url: "https://www.aabb.org/docs/default-source/default-document-library/resources/association-bulletins/ab24-02.pdf" } ]
   },
   {
-    id: 6, number: "EP 06", title: "Esmolol for Refractory Ventricular Fibrillation", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
+    id: 6, number: "EP 06", title: "Esmolol for Refractory Ventricular Fibrillation", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
     primaryArticle: { title: 'Lee YH, et al. "Refractory VF treated with esmolol." Resuscitation 2016.', url: "https://pubmed.ncbi.nlm.nih.gov/27523955/" },
     supportingArticles: [ { title: "Lian R, et al. Case series — Frontiers in Pharmacology 2022", url: "https://www.frontiersin.org/journals/pharmacology/articles/10.3389/fphar.2022.930245/full" } ]
   },
   {
-    id: 7, number: "EP 07", title: "Ketamine vs Opioids for Acute Pain in the ED", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
+    id: 7, number: "EP 07", title: "Ketamine vs Opioids for Acute Pain in the ED", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
     primaryArticle: { title: 'Motov S, et al. "Subdissociative-Dose Ketamine vs Morphine." Ann Emerg Med 2015.', url: "" },
     supportingArticles: []
   },
   {
-    id: 8, number: "EP 08", title: "The HEART Score for Chest Pain Risk Stratification", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
+    id: 8, number: "EP 08", title: "The HEART Score for Chest Pain Risk Stratification", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
     primaryArticle: { title: 'Mahler SA, et al. "The HEART Pathway randomized trial." Circ CQO 2015.', url: "" },
     supportingArticles: []
   },
   {
-    id: 9, number: "EP 09", title: "Push-Dose Epinephrine in the ED", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
+    id: 9, number: "EP 09", title: "Push-Dose Epinephrine in the ED", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
     primaryArticle: { title: 'Weingart S. "Push-dose pressors for immediate BP control." Clin Exp Emerg Med 2015.', url: "" },
     supportingArticles: []
   },
   {
-    id: 10, number: "EP 10", title: "PECARN Rules — Pediatric Head Trauma CT Decisions", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
+    id: 10, number: "EP 10", title: "PECARN Rules — Pediatric Head Trauma CT Decisions", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
     primaryArticle: { title: 'Kuppermann N, et al. "Children at low risk of brain injuries." Lancet 2009.', url: "" },
     supportingArticles: []
   },
   {
-    id: 11, number: "EP 11", title: "Targeted Temperature Management After Cardiac Arrest (TTM2)", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
+    id: 11, number: "EP 11", title: "Targeted Temperature Management After Cardiac Arrest (TTM2)", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
     primaryArticle: { title: 'Dankiewicz J, et al. "Hypothermia vs Normothermia — TTM2." NEJM 2021.', url: "" },
     supportingArticles: []
   },
   {
-    id: 12, number: "EP 12", title: "ACEP Clinical Policy — Mild TBI / Concussion in Adults", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
+    id: 12, number: "EP 12", title: "ACEP Clinical Policy — Mild TBI / Concussion in Adults", status: "coming-soon", videoUrl: "", releaseDate: "", cmeCredits: 0.5, disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.", learningObjectives: ["Learning objectives will be posted when this episode is released."],
     primaryArticle: { title: 'ACEP Clinical Policy. Ann Emerg Med (most recent update).', url: "" },
     supportingArticles: []
   }
 ];
 
+// ===== FIREBASE INIT =====
+const firebaseConfig = {
+  apiKey: "AIzaSyA7evZ3Kyh0ewUwGbScXu26NHy98P9b4ig",
+  authDomain: "em-journal-club.firebaseapp.com",
+  projectId: "em-journal-club",
+  storageBucket: "em-journal-club.firebasestorage.app",
+  messagingSenderId: "631774357541",
+  appId: "1:631774357541:web:641aab58d8a0d0cea637cc"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
 // ===== STATE =====
 let currentUser = null;
-let claimedCredits = {}; // { episodeId: { date, credits } }
-let pendingEpisodeId = null; // Track which episode to reopen after login
+let claimedCredits = {};
+let pendingEpisodeId = null;
+let authReady = false;
 
-// Load from localStorage
-function loadState() {
-  const saved = localStorage.getItem('emjc_user');
-  if (saved) {
-    currentUser = JSON.parse(saved);
-    updateUserUI();
+// Load user data from Firestore
+async function loadUserData(user) {
+  try {
+    const userDoc = await db.collection('users').doc(user.uid).get();
+    if (userDoc.exists) {
+      const data = userDoc.data();
+      currentUser = { name: data.name, email: data.email, npi: data.npi || '' };
+      claimedCredits = data.completions || {};
+    } else {
+      currentUser = { name: user.displayName || user.email, email: user.email, npi: '' };
+      claimedCredits = {};
+    }
+  } catch (e) {
+    console.error('Error loading user data:', e);
+    currentUser = { name: user.displayName || user.email, email: user.email, npi: '' };
+    claimedCredits = {};
   }
-  const savedCredits = localStorage.getItem('emjc_credits_' + (currentUser?.email || ''));
-  if (savedCredits) claimedCredits = JSON.parse(savedCredits);
 }
 
-function saveState() {
-  if (currentUser) {
-    localStorage.setItem('emjc_user', JSON.stringify(currentUser));
-    localStorage.setItem('emjc_credits_' + currentUser.email, JSON.stringify(claimedCredits));
+// Save completion to Firestore
+async function saveCompletion() {
+  const user = auth.currentUser;
+  if (!user) return;
+  try {
+    await db.collection('users').doc(user.uid).update({ completions: claimedCredits });
+  } catch (e) {
+    console.error('Error saving completion:', e);
   }
 }
 
@@ -1199,17 +1238,7 @@ function openEpisode(id) {
   const ytId = getYouTubeId(ep.videoUrl);
   let videoEmbed;
 
-  if (!currentUser) {
-    // Not logged in — show login prompt instead of video
-    videoEmbed = `
-      <div class="video-placeholder" style="cursor:pointer;" onclick="pendingEpisodeId=${ep.id};openModal()">
-        <div style="width:64px;height:64px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px;border:2px solid rgba(255,255,255,0.2);">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <span style="font-size:18px;font-weight:600;color:white;">Sign in to watch</span>
-        <span style="font-size:14px;color:#8694A7;margin-top:4px;">Video access is restricted to registered users</span>
-      </div>`;
-  } else if (ytId) {
+  if (ytId) {
     videoEmbed = `
       <a href="https://www.youtube.com/watch?v=${ytId}" target="_blank" rel="noopener" style="display:block;width:100%;height:100%;position:relative;text-decoration:none;">
         <img src="https://img.youtube.com/vi/${ytId}/maxresdefault.jpg" alt="Video thumbnail" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg'">
@@ -1236,10 +1265,19 @@ function openEpisode(id) {
 
   // Survey section + completion - unified
   const hasSurvey = !!ep.surveyUrl;
+  const transcriptLink = `<a href="https://scpmgelm.kp.org/psc/mdelmprd/EMPLOYEE/ELM/c/MD_LEARNER_ENRL.MD_ELM_TRANSCRIPT.GBL?" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--offwhite);border-radius:var(--radius-sm);text-decoration:none;color:var(--navy);border:1px solid var(--gray-100);margin-top:16px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--teal)';this.style.background='#E8F8FC'" onmouseout="this.style.borderColor='var(--gray-100)';this.style.background='var(--offwhite)'">
+      <div style="width:32px;height:32px;background:var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:600;">View CME Transcript & Completed Activities</div>
+        <div style="font-size:11px;color:var(--gray-400);line-height:1.4;margin-top:2px;">Updated within 30 days of completion<br>Kaiser intranet and login required for access</div>
+      </div>
+    </a>`;
 
   let claimHTML;
   if (claimed) {
-    // Already completed — survey link just opens survey, shows completed status
+    // Already completed — survey link just reopens survey, shows completed status
     const surveyBtn = hasSurvey
       ? `<a href="${ep.surveyUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--offwhite);border-radius:var(--radius-sm);text-decoration:none;color:var(--navy);border:1px solid var(--gray-100);margin-bottom:16px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--teal)';this.style.background='#E8F8FC'" onmouseout="this.style.borderColor='var(--gray-100)';this.style.background='var(--offwhite)'">
           <div style="width:36px;height:36px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -1252,34 +1290,33 @@ function openEpisode(id) {
           <div style="margin-left:auto;font-size:18px;color:var(--gray-400);">→</div>
         </a>`
       : '';
-    claimHTML = `${surveyBtn}<button class="btn-claim claimed-btn">✓ Completed on ${claimed.date}</button>`;
+    claimHTML = `${surveyBtn}<button class="btn-claim claimed-btn">✓ Completed on ${claimed.date}</button>${transcriptLink}`;
   } else if (hasSurvey) {
     // Has survey link — one click opens survey + marks completed
     claimHTML = `
       <button class="btn-claim" id="btnClaim" onclick="openSurveyAndComplete(${ep.id}, '${ep.surveyUrl}')" style="text-align:left;padding:16px 20px;">
-        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;">
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;" id="claimCheck1"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid rgba(255,255,255,0.4);border-radius:4px;font-size:12px;"></span> I read the article</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;" id="claimCheck2"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid rgba(255,255,255,0.4);border-radius:4px;font-size:12px;"></span> I watched the video</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;" id="claimCheck3"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid rgba(255,255,255,0.4);border-radius:4px;font-size:12px;"></span> I completed the survey</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid rgba(255,255,255,0.4);border-radius:4px;font-size:12px;flex-shrink:0;" id="claimCheckBox"></span>
+          <span style="font-size:13px;line-height:1.4;" id="claimCheckText">I've read the article, watched the video, and am ready to take the survey to receive CME credit.</span>
         </div>
         <div style="text-align:center;font-weight:700;font-size:15px;">Open Survey & Mark as Completed</div>
       </button>
+      ${transcriptLink}
     `;
   } else {
-    // No survey link yet — show placeholder + disabled-looking completion
+    // No survey link yet — faded coming soon state
     claimHTML = `
-      <div style="padding:14px 16px;background:var(--offwhite);border-radius:var(--radius-sm);border:1px solid var(--gray-100);margin-bottom:16px;text-align:center;">
-        <div style="font-size:14px;font-weight:600;color:var(--gray-400);">📋 CME Survey</div>
-        <div style="font-size:12px;color:var(--gray-400);margin-top:4px;">Survey link coming soon</div>
+      <div style="opacity:0.45;pointer-events:none;">
+        <button class="btn-claim" disabled style="text-align:left;padding:16px 20px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid rgba(255,255,255,0.4);border-radius:4px;font-size:12px;flex-shrink:0;"></span>
+            <span style="font-size:13px;line-height:1.4;">I've read the article, watched the video, and am ready to take the survey to receive CME credit.</span>
+          </div>
+          <div style="text-align:center;font-weight:700;font-size:15px;">Open Survey & Mark as Completed</div>
+        </button>
       </div>
-      <button class="btn-claim" disabled style="text-align:left;padding:16px 20px;opacity:0.5;">
-        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;">
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid rgba(255,255,255,0.4);border-radius:4px;font-size:12px;"></span> I read the article</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid rgba(255,255,255,0.4);border-radius:4px;font-size:12px;"></span> I watched the video</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid rgba(255,255,255,0.4);border-radius:4px;font-size:12px;"></span> I completed the survey</div>
-        </div>
-        <div style="text-align:center;font-weight:700;font-size:15px;">Mark as Completed</div>
-      </button>
+      <p style="font-size:13px;color:var(--gray-400);text-align:center;margin-top:12px;">📋 CME survey coming soon</p>
+      ${transcriptLink}
     `;
   }
 
@@ -1290,13 +1327,6 @@ function openEpisode(id) {
     <div class="detail-grid">
       <div>
         <div class="video-container">${videoEmbed}</div>
-        ${!currentUser ? `
-          <div class="detail-card" style="margin-top:20px;text-align:center;">
-            <h3>📋 Learning Objectives</h3>
-            <p style="font-size:14px;color:var(--gray-400);margin-bottom:12px;">Sign in to view the learning objectives for this episode.</p>
-            <button class="btn-claim" style="max-width:200px;margin:0 auto;" onclick="pendingEpisodeId=${ep.id};openModal()">Sign In to View</button>
-          </div>
-        ` : `
           <div class="detail-card" style="margin-top:20px;">
             <h3>📋 Learning Objectives</h3>
             <p style="font-size:14px;color:var(--gray-600);margin-bottom:12px;">By the end of this episode, you should be able to:</p>
@@ -1308,7 +1338,6 @@ function openEpisode(id) {
             <h3>📝 Disclosures</h3>
             <p style="font-size:14px;color:var(--gray-600);line-height:1.6;">${ep.disclosures}</p>
           </div>
-        `}
       </div>
       <div class="detail-sidebar">
         <div class="detail-card">
@@ -1325,10 +1354,7 @@ function openEpisode(id) {
         <div class="detail-card">
           <h3>🏅 CME Credit</h3>
           <p style="font-size:13px;color:var(--gray-400);margin-bottom:16px;">CME credit is issued by the SCPMG CME Office upon completion of the survey below.</p>
-          ${!currentUser
-            ? `<p style="font-size:14px;color:var(--gray-600);margin-bottom:16px;">You must be signed in to access the video and CME materials.</p><button class="btn-claim" onclick="pendingEpisodeId=${ep.id};openModal()">Sign In</button>`
-            : claimHTML
-          }
+          ${claimHTML}
         </div>
       </div>
     </div>
@@ -1353,208 +1379,41 @@ function openSurveyAndComplete(id, surveyUrl) {
   // Open the survey in a new tab
   window.open(surveyUrl, '_blank');
 
-  // Animate the checkmarks
-  const checks = [
-    document.getElementById('claimCheck1'),
-    document.getElementById('claimCheck2'),
-    document.getElementById('claimCheck3')
-  ];
-
-  function animateCheck(el, delay) {
+  // Animate the checkbox
+  const box = document.getElementById('claimCheckBox');
+  if (box) {
     setTimeout(() => {
-      const box = el.querySelector('span');
       box.style.background = '#22C55E';
       box.style.borderColor = '#22C55E';
       box.textContent = '✓';
-    }, delay);
+    }, 300);
   }
-
-  animateCheck(checks[0], 200);
-  animateCheck(checks[1], 500);
-  animateCheck(checks[2], 800);
 
   setTimeout(() => {
     claimCredit(id);
-  }, 1200);
+  }, 900);
 }
 
 // ===== CLAIM CREDIT =====
 function claimCredit(id) {
-  if (!currentUser) { openModal(); return; }
   const ep = episodes.find(e => e.id === id);
   const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   claimedCredits[id] = { date: today, credits: ep.cmeCredits };
-  saveState();
+  saveCompletion();
   renderEpisodes();
   openEpisode(id);
   showToast(`"${ep.title}" marked as completed!`, 'success');
 }
 
 // ===== CERTIFICATE GENERATION =====
-function generateCertificate() {
-  if (!currentUser) return;
-  const selectedYear = document.getElementById('certYear').value;
-  const claimedList = Object.entries(claimedCredits);
-
-  const filtered = selectedYear === 'all'
-    ? claimedList
-    : claimedList.filter(([_, c]) => new Date(c.date).getFullYear() === parseInt(selectedYear));
-
-  if (filtered.length === 0) {
-    showToast('No credits found for the selected year.', 'error');
-    return;
-  }
-
-  const totalCredits = filtered.reduce((sum, [_, c]) => sum + c.credits, 0);
-  const yearLabel = selectedYear === 'all' ? 'All Years' : selectedYear;
-  const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-
-  const completedEpisodes = filtered.map(([epId, data]) => {
-    const ep = episodes.find(e => e.id === parseInt(epId));
-    return { title: `${ep.number}: ${ep.title}`, date: data.date, credits: data.credits };
-  });
-
-  const episodeRows = completedEpisodes.map(ep =>
-    `<tr>
-      <td style="padding:8px 16px;border-bottom:1px solid #E8ECF1;font-size:11px;color:#0B1D3A;">${ep.title}</td>
-      <td style="padding:8px 16px;border-bottom:1px solid #E8ECF1;font-size:11px;color:#5A6A7E;text-align:center;">${ep.date}</td>
-      <td style="padding:8px 16px;border-bottom:1px solid #E8ECF1;font-size:11px;color:#0096B7;text-align:center;font-weight:600;">${ep.credits}</td>
-    </tr>`
-  ).join('');
-
-  const certHTML = `
-    <html>
-    <head>
-      <title>CME Certificate - ${currentUser.name}</title>
-      <` + `style>
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap');
-        @page { size: letter landscape; margin: 0; }
-        body { margin: 0; padding: 0; font-family: 'DM Sans', sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        .cert-page { width: 10in; height: 7.5in; margin: 0 auto; position: relative; background: #FFFFFF; overflow: hidden; page-break-after: always; }
-        .cert-border { position: absolute; top: 20px; left: 20px; right: 20px; bottom: 20px; border: 3px solid #0B1D3A; border-radius: 4px; }
-        .cert-border-inner { position: absolute; top: 28px; left: 28px; right: 28px; bottom: 28px; border: 1px solid #C5CDD8; border-radius: 2px; }
-        .cert-corner { position: absolute; width: 40px; height: 40px; border: 2px solid #00B4D8; }
-        .cert-corner.tl { top: 36px; left: 36px; border-right: none; border-bottom: none; }
-        .cert-corner.tr { top: 36px; right: 36px; border-left: none; border-bottom: none; }
-        .cert-corner.bl { bottom: 36px; left: 36px; border-right: none; border-top: none; }
-        .cert-corner.br { bottom: 36px; right: 36px; border-left: none; border-top: none; }
-        .cert-content { position: relative; z-index: 1; padding: 60px 80px 40px; text-align: center; height: 100%; display: flex; flex-direction: column; }
-        .cert-header-bar { background: #0B1D3A; color: white; padding: 12px 32px; display: inline-flex; align-items: center; gap: 12px; border-radius: 4px; margin: 0 auto 20px; }
-        .cert-logo { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 800; }
-        .cert-logo span { color: #00B4D8; }
-        .cert-title { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 800; color: #0B1D3A; margin-bottom: 6px; letter-spacing: -0.5px; }
-        .cert-subtitle { font-size: 13px; color: #8694A7; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 24px; }
-        .cert-recipient { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #0096B7; margin-bottom: 4px; }
-        .cert-npi { font-size: 12px; color: #8694A7; margin-bottom: 16px; }
-        .cert-text { font-size: 13px; color: #5A6A7E; line-height: 1.6; max-width: 600px; margin: 0 auto 20px; }
-        .cert-credits-box { display: inline-flex; align-items: baseline; gap: 8px; background: #F0F2F5; padding: 12px 32px; border-radius: 8px; margin: 0 auto 20px; }
-        .cert-credits-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 800; color: #0B1D3A; }
-        .cert-credits-label { font-size: 14px; color: #5A6A7E; font-weight: 500; }
-        .cert-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: flex-end; padding-top: 16px; border-top: 1px solid #E8ECF1; }
-        .cert-footer-col { text-align: center; }
-        .cert-sig-line { width: 180px; border-bottom: 1px solid #0B1D3A; margin-bottom: 6px; }
-        .cert-sig-name { font-size: 11px; color: #0B1D3A; font-weight: 600; }
-        .cert-sig-title { font-size: 10px; color: #8694A7; }
-        .cert-date { font-size: 11px; color: #5A6A7E; }
-        .cert-org { font-size: 10px; color: #8694A7; }
-
-        .detail-page { width: 10in; min-height: 7.5in; margin: 0 auto; padding: 48px 64px; background: #FFFFFF; page-break-before: always; }
-        .detail-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: #0B1D3A; margin-bottom: 4px; }
-        .detail-sub { font-size: 12px; color: #8694A7; margin-bottom: 24px; }
-        .detail-table { width: 100%; border-collapse: collapse; }
-        .detail-table th { padding: 10px 16px; background: #0B1D3A; color: white; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; }
-        .detail-table th:nth-child(2), .detail-table th:nth-child(3) { text-align: center; }
-        .detail-total { margin-top: 16px; text-align: right; font-size: 14px; font-weight: 700; color: #0B1D3A; }
-      <` + `/style>
-    </head>
-    <body>
-      <!-- PAGE 1: CERTIFICATE -->
-      <div class="cert-page">
-        <div class="cert-border"></div>
-        <div class="cert-border-inner"></div>
-        <div class="cert-corner tl"></div>
-        <div class="cert-corner tr"></div>
-        <div class="cert-corner bl"></div>
-        <div class="cert-corner br"></div>
-        <div class="cert-content">
-          <div class="cert-header-bar">
-            <div class="cert-logo">EM <span>Journal Club</span></div>
-          </div>
-          <div class="cert-title">Certificate of Completion</div>
-          <div class="cert-subtitle">Continuing Medical Education</div>
-          <div style="font-size:13px;color:#8694A7;margin-bottom:12px;">This is to certify that</div>
-          <div class="cert-recipient">${currentUser.name}${currentUser.npi ? ', MD' : ''}</div>
-          ${currentUser.npi ? `<div class="cert-npi">NPI: ${currentUser.npi}</div>` : '<div style="margin-bottom:16px;"></div>'}
-          <div class="cert-text">has successfully completed the following Continuing Medical Education activities through the EM Journal Club Video Podcast Series during <strong>${yearLabel}</strong>.</div>
-          <div class="cert-credits-box">
-            <span class="cert-credits-num">${totalCredits.toFixed(1)}</span>
-            <span class="cert-credits-label">Episodes Completed</span>
-          </div>
-          <div class="cert-footer">
-            <div class="cert-footer-col">
-              <div class="cert-sig-line"></div>
-              <div class="cert-sig-name">Program Director</div>
-              <div class="cert-sig-title">EM Journal Club</div>
-            </div>
-            <div class="cert-footer-col">
-              <div class="cert-date">Issued: ${today}</div>
-              <div class="cert-org">Kaiser Downey Medical Center</div>
-              <div class="cert-org">Southern California Permanente Medical Group</div>
-            </div>
-            <div class="cert-footer-col">
-              <div class="cert-sig-line"></div>
-              <div class="cert-sig-name">CME Committee</div>
-              <div class="cert-sig-title">SCPMG</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PAGE 2: DETAIL -->
-      <div class="detail-page">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
-          <div style="background:#0B1D3A;color:white;padding:6px 14px;border-radius:4px;font-family:'Playfair Display',serif;font-size:14px;font-weight:800;">EM <span style="color:#00B4D8;">Journal Club</span></div>
-        </div>
-        <div class="detail-title">CME Credit Detail — ${currentUser.name}</div>
-        <div class="detail-sub">${yearLabel} | Generated ${today}</div>
-        <table class="detail-table">
-          <thead>
-            <tr>
-              <th>Episode</th>
-              <th>Date Completed</th>
-              <th>Credits</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${episodeRows}
-          </tbody>
-        </table>
-        <div class="detail-total">Total Episodes Completed: ${filtered.length} &nbsp;|&nbsp; CME credit issued by SCPMG CME Office upon survey completion</div>
-        <div style="margin-top:40px;padding-top:16px;border-top:1px solid #E8ECF1;font-size:10px;color:#8694A7;line-height:1.6;">
-          Kaiser Downey Medical Center — Department of Emergency Medicine<br>
-          Southern California Permanente Medical Group<br>
-          This certificate confirms the above-named physician has completed the listed CME activities by viewing the associated video episode and reading the designated journal article(s) for each topic.
-        </div>
-      </div>
-
-      <` + `script>window.onload = function() { window.print(); };<` + `/script>
-    </body>
-    </html>
-  `;
-
-  const certWindow = window.open('', '_blank');
-  certWindow.document.write(certHTML);
-  certWindow.document.close();
-}
-
 // ===== CME DASHBOARD =====
 function renderCMEDashboard() {
   const dashboard = document.getElementById('cmeDashboard');
   if (!currentUser) {
     dashboard.innerHTML = `
       <div style="text-align:center;padding:80px 24px;">
-        <h2 style="font-family:var(--font-display);font-size:28px;margin-bottom:12px;">Track Your CME Credits</h2>
-        <p style="color:var(--gray-600);margin-bottom:24px;">Sign in to view your credit history and track your progress.</p>
+        <h2 style="font-family:var(--font-display);font-size:28px;margin-bottom:12px;">Track Your Progress</h2>
+        <p style="color:var(--gray-600);margin-bottom:24px;">Sign in to track your completed episodes.</p>
         <button class="btn-claim" style="max-width:200px;margin:0 auto;" onclick="openModal()">Sign In</button>
       </div>
     `;
@@ -1562,8 +1421,6 @@ function renderCMEDashboard() {
   }
 
   const claimedList = Object.entries(claimedCredits);
-  const totalCredits = claimedList.reduce((sum, [_, c]) => sum + c.credits, 0);
-  const totalAvailable = episodes.length * 0.5;
 
   const historyRows = claimedList.map(([epId, data]) => {
     const ep = episodes.find(e => e.id === parseInt(epId));
@@ -1574,33 +1431,19 @@ function renderCMEDashboard() {
           <div class="cme-history-title">${ep.number}: ${ep.title}</div>
           <div class="cme-history-date">Completed ${data.date}</div>
         </div>
-        <div class="cme-history-credits">${data.credits} Credit</div>
       </div>
     `;
   }).join('');
 
-  // Get unique years from claimed credits
-  const years = [...new Set(claimedList.map(([_, c]) => {
-    const d = new Date(c.date);
-    return d.getFullYear();
-  }))].sort((a, b) => b - a);
-  const currentYear = new Date().getFullYear();
-  if (!years.includes(currentYear)) years.unshift(currentYear);
-  const yearOptions = years.map(y => `<option value="${y}">${y}</option>`).join('');
-
   dashboard.innerHTML = `
     <div class="cme-summary">
       <div class="cme-stat-card">
-        <div class="num teal">${totalCredits.toFixed(1)}</div>
-        <div class="label">Credits Earned</div>
-      </div>
-      <div class="cme-stat-card">
-        <div class="num gold">${totalAvailable.toFixed(1)}</div>
-        <div class="label">Total Available</div>
-      </div>
-      <div class="cme-stat-card">
-        <div class="num">${claimedList.length}</div>
+        <div class="num teal">${claimedList.length}</div>
         <div class="label">Episodes Completed</div>
+      </div>
+      <div class="cme-stat-card">
+        <div class="num gold">${episodes.length}</div>
+        <div class="label">Total Episodes</div>
       </div>
       <div class="cme-stat-card">
         <div class="num">${episodes.length - claimedList.length}</div>
@@ -1608,18 +1451,19 @@ function renderCMEDashboard() {
       </div>
     </div>
     <div class="cme-history">
-      <div class="cme-history-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-        <span>Credit History — ${currentUser.name}</span>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <select id="certYear" style="padding:8px 12px;border:2px solid var(--gray-100);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:13px;background:var(--white);cursor:pointer;">
-            <option value="all">All Years</option>
-            ${yearOptions}
-          </select>
-          <button onclick="generateCertificate()" style="padding:8px 18px;background:var(--navy);color:var(--white);border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background 0.2s;" onmouseover="this.style.background='var(--navy-mid)'" onmouseout="this.style.background='var(--navy)'">📄 Download Certificate</button>
-        </div>
-      </div>
-      ${historyRows || '<div class="cme-empty">No episodes completed yet. Watch an episode, read the article, and complete the survey to get started.</div>'}
+      <div class="cme-history-header">Episodes Completed — ${currentUser.name}</div>
+      ${historyRows || '<div class="cme-empty">No episodes completed yet. Watch an episode, read the article, and complete the CME survey to get started.</div>'}
     </div>
+    <a href="https://scpmgelm.kp.org/psc/mdelmprd/EMPLOYEE/ELM/c/MD_LEARNER_ENRL.MD_ELM_TRANSCRIPT.GBL?" target="_blank" rel="noopener" style="display:flex;align-items:flex-start;gap:14px;padding:20px 24px;background:var(--white);border-radius:var(--radius);text-decoration:none;color:var(--navy);border:1px solid var(--gray-100);margin-top:20px;box-shadow:var(--shadow-sm);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--teal)';this.style.boxShadow='var(--shadow-md)'" onmouseout="this.style.borderColor='var(--gray-100)';this.style.boxShadow='var(--shadow-sm)'">
+      <div style="width:44px;height:44px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <div>
+        <div style="font-size:16px;font-weight:700;">View CME Transcript & Completed Activities</div>
+        <div style="font-size:13px;color:var(--gray-400);line-height:1.5;margin-top:4px;">View your official CME credit history, certificates, and completed activities. Updated within 30 days of completion. Kaiser intranet and login required for access.</div>
+      </div>
+      <div style="margin-left:auto;font-size:20px;color:var(--gray-400);align-self:center;">→</div>
+    </a>
   `;
 }
 
@@ -1660,7 +1504,7 @@ function toggleForm(form) {
   document.getElementById('registerForm').style.display = form === 'register' ? 'block' : 'none';
 }
 
-function handleLogin() {
+async function handleLogin() {
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
   const errorEl = document.getElementById('loginError');
@@ -1671,29 +1515,26 @@ function handleLogin() {
     return;
   }
 
-  // Check if user exists in localStorage
-  const users = JSON.parse(localStorage.getItem('emjc_users') || '{}');
-  if (users[email] && users[email].password === password) {
-    currentUser = { name: users[email].name, email, npi: users[email].npi };
-    saveState();
-    // Load their credits
-    const savedCredits = localStorage.getItem('emjc_credits_' + email);
-    if (savedCredits) claimedCredits = JSON.parse(savedCredits);
-    updateUserUI();
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
     closeModal();
-    renderEpisodes();
+    // onAuthStateChanged will handle loading data and updating UI
+    // Just handle the pending episode redirect
     if (pendingEpisodeId) {
-      openEpisode(pendingEpisodeId);
-      pendingEpisodeId = null;
+      setTimeout(() => { openEpisode(pendingEpisodeId); pendingEpisodeId = null; }, 600);
     }
-    showToast(`Welcome back, Dr. ${currentUser.name.split(' ').pop()}!`, 'success');
-  } else {
-    errorEl.textContent = 'Invalid email or password.';
+  } catch (error) {
+    const msg = error.code === 'auth/user-not-found' ? 'No account found with this email.' :
+                error.code === 'auth/wrong-password' ? 'Incorrect password.' :
+                error.code === 'auth/invalid-credential' ? 'Invalid email or password.' :
+                error.code === 'auth/too-many-requests' ? 'Too many attempts. Please try again later.' :
+                'Sign in failed. Please try again.';
+    errorEl.textContent = msg;
     errorEl.style.display = 'block';
   }
 }
 
-function handleRegister() {
+async function handleRegister() {
   const name = document.getElementById('regName').value.trim();
   const email = document.getElementById('regEmail').value.trim();
   const npi = document.getElementById('regNPI').value.trim();
@@ -1706,43 +1547,62 @@ function handleRegister() {
     return;
   }
 
-  if (password.length < 4) {
-    errorEl.textContent = 'Password must be at least 4 characters.';
+  if (password.length < 6) {
+    errorEl.textContent = 'Password must be at least 6 characters.';
     errorEl.style.display = 'block';
     return;
   }
 
-  const users = JSON.parse(localStorage.getItem('emjc_users') || '{}');
-  if (users[email]) {
-    errorEl.textContent = 'An account with this email already exists.';
+  try {
+    const cred = await auth.createUserWithEmailAndPassword(email, password);
+    await cred.user.updateProfile({ displayName: name });
+    await db.collection('users').doc(cred.user.uid).set({
+      name: name,
+      email: email,
+      npi: npi,
+      completions: {}
+    });
+    closeModal();
+    if (pendingEpisodeId) {
+      setTimeout(() => { openEpisode(pendingEpisodeId); pendingEpisodeId = null; }, 600);
+    }
+    showToast(`Account created! Welcome, Dr. ${name.split(' ').pop()}.`, 'success');
+  } catch (error) {
+    const msg = error.code === 'auth/email-already-in-use' ? 'An account with this email already exists.' :
+                error.code === 'auth/weak-password' ? 'Password must be at least 6 characters.' :
+                error.code === 'auth/invalid-email' ? 'Please enter a valid email address.' :
+                'Registration failed. Please try again.';
+    errorEl.textContent = msg;
     errorEl.style.display = 'block';
-    return;
   }
-
-  users[email] = { name, password, npi };
-  localStorage.setItem('emjc_users', JSON.stringify(users));
-
-  currentUser = { name, email, npi };
-  claimedCredits = {};
-  saveState();
-  updateUserUI();
-  closeModal();
-  renderEpisodes();
-  if (pendingEpisodeId) {
-    openEpisode(pendingEpisodeId);
-    pendingEpisodeId = null;
-  }
-  showToast(`Account created! Welcome, Dr. ${name.split(' ').pop()}.`, 'success');
 }
 
 function signOut() {
+  auth.signOut();
   currentUser = null;
   claimedCredits = {};
-  localStorage.removeItem('emjc_user');
   updateUserUI();
   renderEpisodes();
   showTab('episodes');
   showToast('Signed out successfully.', 'success');
+}
+
+async function forgotPassword() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const errorEl = document.getElementById('loginError');
+  if (!email) {
+    errorEl.textContent = 'Enter your email above, then click "Forgot password."';
+    errorEl.style.display = 'block';
+    return;
+  }
+  try {
+    await auth.sendPasswordResetEmail(email);
+    showToast('Password reset email sent. Check your inbox.', 'success');
+    errorEl.style.display = 'none';
+  } catch (error) {
+    errorEl.textContent = 'Could not send reset email. Please check the email address.';
+    errorEl.style.display = 'block';
+  }
 }
 
 function updateUserUI() {
@@ -1768,8 +1628,18 @@ function showToast(message, type = 'success') {
 }
 
 // ===== INIT =====
-loadState();
-renderEpisodes();
+// Firebase auth state listener — fires on page load and on login/logout
+auth.onAuthStateChanged(async (user) => {
+  if (user) {
+    await loadUserData(user);
+  } else {
+    currentUser = null;
+    claimedCredits = {};
+  }
+  updateUserUI();
+  renderEpisodes();
+  authReady = true;
+});
 
 // Close modal on overlay click
 document.getElementById('modalOverlay').addEventListener('click', function(e) {
