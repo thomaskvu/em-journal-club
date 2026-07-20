@@ -1223,6 +1223,9 @@ function openEpisode(id) {
 
   const claimed = claimedCredits[ep.id];
 
+  // Update URL hash for shareable link
+  window.history.replaceState(null, '', '#episode-' + id);
+
   document.getElementById('episodesGrid').style.display = 'none';
   document.getElementById('heroSection').style.display = 'none';
   document.querySelector('.tabs').style.display = 'none';
@@ -1389,6 +1392,8 @@ function closeEpisode() {
   document.getElementById('episodesGrid').style.display = '';
   document.getElementById('heroSection').style.display = '';
   document.querySelector('.tabs').style.display = '';
+  // Clear URL hash
+  window.history.replaceState(null, '', window.location.pathname);
 }
 
 // ===== OPEN SURVEY AND COMPLETE =====
@@ -1661,6 +1666,15 @@ auth.onAuthStateChanged(async (user) => {
   updateUserUI();
   renderEpisodes();
   authReady = true;
+
+  // Check for episode hash in URL (e.g. #episode-2)
+  const hash = window.location.hash;
+  if (hash && hash.startsWith('#episode-')) {
+    const epId = parseInt(hash.replace('#episode-', ''));
+    if (epId && episodes.find(e => e.id === epId)) {
+      openEpisode(epId);
+    }
+  }
 });
 
 // Close modal on overlay click
