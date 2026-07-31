@@ -1024,6 +1024,7 @@ const episodes = [
     videoUrl: "https://vimeo.com/1204631227/7c1e553172?fl=pl&fe=vl",
     surveyUrl: "https://forms.office.com/r/vwfVaNrtU0",
     releaseDate: "May 1, 2026",
+    thumbUrl: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&h=400&fit=crop&q=80",
     cmeCredits: 0.5,
     disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.",
     learningObjectives: [
@@ -1046,12 +1047,17 @@ const episodes = [
     id: 2,
     number: "EP 02",
     title: "Pigtail Catheters vs Chest Tubes in Traumatic Pneumothorax",
-    status: "coming-soon",
-    videoUrl: "",
+    status: "available",
+    videoUrl: "https://vimeo.com/1214381270/c7cb3fc299?share=copy&fl=sv&fe=ci",
     releaseDate: "",
+    thumbUrl: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=800&h=400&fit=crop&q=80",
     cmeCredits: 0.5,
     disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.",
-    learningObjectives: ["Learning objectives will be posted when this episode is released."],
+    learningObjectives: [
+      "Compare the insertion technique, size, and clinical application of pigtail catheters versus traditional chest tubes",
+      "Summarize the design and findings of the Kulvatunyou 2014 RCT",
+      "Discuss the role of pigtail catheters in the management of uncomplicated traumatic pneumothorax"
+    ],
     primaryArticle: {
       title: 'Kulvatunyou N, et al. "Pigtail catheter vs chest tube — RCT." Br J Surg 2014.',
       url: "https://pubmed.ncbi.nlm.nih.gov/24375295/"
@@ -1196,9 +1202,12 @@ function renderEpisodes() {
     const claimed = claimedCredits[ep.id];
     const statusLabel = claimed ? 'completed' : ep.status;
     const statusText = claimed ? '✓ Completed' : (ep.status === 'available' ? 'Available' : 'Coming Soon');
+    const thumbStyle = ep.thumbUrl
+      ? `background:linear-gradient(to top, rgba(11,29,58,0.95) 0%, rgba(11,29,58,0.6) 50%, rgba(11,29,58,0.3) 100%), url('${ep.thumbUrl}') center/cover no-repeat;`
+      : '';
     return `
       <div class="episode-card" onclick="openEpisode(${ep.id})">
-        <div class="episode-thumb">
+        <div class="episode-thumb" style="${thumbStyle}">
           <span class="episode-number">${ep.number}</span>
           <span class="episode-status ${statusLabel}">${statusText}</span>
           <div class="episode-title">${ep.title}</div>
