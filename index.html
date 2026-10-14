@@ -1071,14 +1071,20 @@ const episodes = [
     id: 3,
     number: "EP 03",
     title: "Peripheral Vasopressors in the Emergency Department",
-    status: "coming-soon",
-    videoUrl: "",
-    releaseDate: "",
+    status: "available",
+    videoUrl: "https://vimeo.com/1235620386/d8b5798a6e?share=copy&fl=sv&fe=ci",
+    surveyUrl: "https://forms.office.com/r/vwfVaNrtU0",
+    releaseDate: "October 13, 2026",
+    thumbUrl: "https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=800&h=400&fit=crop&q=80",
     cmeCredits: 0.5,
     disclosures: "The presenter has no relevant financial relationships or conflicts of interest to disclose. The views and opinions expressed in this activity are solely those of the presenter(s) and do not represent the views of Southern California Permanente Medical Group (SCPMG), Kaiser Downey Medical Center, or Kaiser Permanente.",
-    learningObjectives: ["Learning objectives will be posted when this episode is released."],
+    learningObjectives: [
+      "Describe the historical basis and evolving evidence for central versus peripheral vasopressor administration",
+      "Summarize the design and findings of the Munroe et al. secondary analysis of the CLOVERS trial",
+      "Discuss the safety profile and practical implications of peripheral vasopressor use in early sepsis-induced hypotension"
+    ],
     primaryArticle: {
-      title: 'Khan A, et al. "Peripheral Vasopressor Use in Early Sepsis" (CLOVERS). JAMA Surgery 2025.',
+      title: 'Munroe ES, Co IN, Douglas I, et al. "Peripheral Vasopressor Use in Early Sepsis-Induced Hypotension." JAMA Network Open. 2025;8(8).',
       url: "https://pubmed.ncbi.nlm.nih.gov/40864467/"
     },
     supportingArticles: [
@@ -1233,8 +1239,8 @@ function openEpisode(id) {
 
   const claimed = claimedCredits[ep.id];
 
-  // Update URL hash for shareable link
-  window.history.replaceState(null, '', '#episode-' + id);
+  // Update URL hash for shareable link — use pushState so back button returns to front page
+  window.history.pushState({ episode: id }, '', '#episode-' + id);
 
   document.getElementById('episodesGrid').style.display = 'none';
   document.getElementById('heroSection').style.display = 'none';
@@ -1402,8 +1408,8 @@ function closeEpisode() {
   document.getElementById('episodesGrid').style.display = '';
   document.getElementById('heroSection').style.display = '';
   document.querySelector('.tabs').style.display = '';
-  // Clear URL hash
-  window.history.replaceState(null, '', window.location.pathname);
+  // Navigate to front page — clear the hash
+  window.history.pushState(null, '', window.location.pathname);
 }
 
 // ===== OPEN SURVEY AND COMPLETE =====
@@ -1684,6 +1690,24 @@ auth.onAuthStateChanged(async (user) => {
     if (epId && episodes.find(e => e.id === epId)) {
       openEpisode(epId);
     }
+  }
+});
+
+// Handle browser back button — return to front page from episode detail
+window.addEventListener('popstate', function(e) {
+  const hash = window.location.hash;
+  if (hash && hash.startsWith('#episode-')) {
+    const epId = parseInt(hash.replace('#episode-', ''));
+    if (epId && episodes.find(ep => ep.id === epId)) {
+      openEpisode(epId);
+    }
+  } else {
+    // No episode hash — show the front page
+    document.getElementById('episodeDetail').classList.remove('visible');
+    document.getElementById('episodeDetail').innerHTML = '';
+    document.getElementById('episodesGrid').style.display = '';
+    document.getElementById('heroSection').style.display = '';
+    document.querySelector('.tabs').style.display = '';
   }
 });
 
